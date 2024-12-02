@@ -2,20 +2,55 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: gainsboro;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="566.0" maxWidth="600.0" prefHeight="566.0" prefWidth="600.0" style="-fx-background-color: gainsboro;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
    <children>
-      <VBox alignment="TOP_CENTER" layoutY="280.0" prefHeight="120.0" prefWidth="600.0" style="-fx-background-color: white; -fx-background-radius: 25;">
+      <VBox alignment="TOP_CENTER" layoutY="414.0" prefHeight="151.0" prefWidth="600.0" style="-fx-background-color: white; -fx-background-radius: 25;">
          <children>
-            <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="600.0" spacing="20.0">
+            <Label fx:id="songLabel" alignment="CENTER" text="Label" textAlignment="CENTER">
+               <font>
+                  <Font name="MS Gothic" size="20.0" />
+               </font>
+               <padding>
+                  <Insets top="15.0" />
+               </padding>
+            </Label>
+            <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="580.0" spacing="20.0">
                <children>
-                  <Button maxHeight="50.0" maxWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-radius: 100;">
+                  <Button fx:id="rewindButton" maxHeight="50.0" maxWidth="50.0" mnemonicParsing="false" onAction="#rewind" prefHeight="50.0" prefWidth="50.0" style="-fx-background-radius: 100;">
+                     <graphic>
+                        <ImageView fitHeight="50.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/rewind.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="pauseButton" maxHeight="50.0" maxWidth="50.0" mnemonicParsing="false" onAction="#pauseMusic" prefHeight="50.0" prefWidth="50.0" style="-fx-background-radius: 100;">
+                     <graphic>
+                        <ImageView fitHeight="50.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/pause.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="playButton" maxHeight="50.0" maxWidth="50.0" mnemonicParsing="false" onAction="#playMusic" prefHeight="50.0" prefWidth="50.0" style="-fx-background-radius: 100;">
                      <graphic>
                         <ImageView fitHeight="50.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -24,11 +59,20 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button maxHeight="50.0" maxWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-radius: 100;">
+                  <Button fx:id="stopButton" maxHeight="50.0" maxWidth="50.0" mnemonicParsing="false" onAction="#stopMusic" prefHeight="50.0" prefWidth="50.0" style="-fx-background-radius: 100;">
                      <graphic>
                         <ImageView fitHeight="50.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@images/pause.png" />
+                              <Image url="@images/stop.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="fowardButton" maxHeight="50.0" maxWidth="50.0" mnemonicParsing="false" onAction="#foward" prefHeight="50.0" prefWidth="50.0" style="-fx-background-radius: 100;">
+                     <graphic>
+                        <ImageView fitHeight="50.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/forward.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -38,11 +82,64 @@
                   <Insets top="20.0" />
                </padding>
             </HBox>
-            <Slider />
+            <ProgressBar fx:id="progressBar" prefHeight="20.0" prefWidth="549.0" progress="0.0" />
          </children>
          <padding>
             <Insets bottom="20.0" left="10.0" right="10.0" />
          </padding>
       </VBox>
+      <MenuBar layoutY="1.0" prefHeight="19.0" prefWidth="600.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <HBox alignment="CENTER_LEFT" layoutY="26.0" prefHeight="37.0" prefWidth="600.0" spacing="20.0" style="-fx-background-color: null;">
+         <children>
+            <Label text="Volume:" />
+            <Slider fx:id="volumeSlider" />
+         </children>
+         <padding>
+            <Insets left="5.0" />
+         </padding>
+      </HBox>
+      <HBox alignment="CENTER" layoutX="56.0" layoutY="80.0" prefHeight="50.0" prefWidth="487.0" spacing="10.0" style="-fx-background-color: white; -fx-background-radius: 50;">
+         <children>
+            <TextField fx:id="areaNome" promptText="Criar playlist">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </TextField>
+            <Button fx:id="addPlaylistButton" mnemonicParsing="false" onAction="#addPlaylist" prefHeight="39.0" prefWidth="39.0" style="-fx-background-radius: 100;">
+               <graphic>
+                  <ImageView fitHeight="21.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/plus.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#openPlaylist" text="Button" />
+         </children>
+      </HBox>
+      <TableView layoutX="34.0" layoutY="144.0" prefHeight="200.0" prefWidth="532.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="index" />
+          <TableColumn prefWidth="75.0" text="Nome" />
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>
